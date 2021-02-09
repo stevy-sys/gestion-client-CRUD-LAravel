@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\Entreprise;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientsController extends Controller
 {
@@ -16,16 +17,16 @@ class ClientsController extends Controller
     public function index(Request $request)
     {
         if ($request->client == "actif") {
-            $clients = Client::Actif();
+            $clients = Client::ClientOfUser()->Actif()->get();
             return view('clients.index',compact('clients'));
         }
 
         if ($request->client == "inactif") {
-            $clients = Client::Inactif();
+            $clients = Client::ClientOfUser()->Inactif()->get();
             return view('clients.index',compact('clients'));
         }
 
-        $clients = Client::all();
+        $clients = Client::where('user_id',Auth::user()->id)->get();
         return view('clients.index',compact('clients'));
     }
     
@@ -44,7 +45,7 @@ class ClientsController extends Controller
             'status' => 'required|integer',
             'entreprise_id' => 'integer'
         ]);
-        
+        $data["user_id"] = Auth::user()->id;
         Client::create($data);
         return redirect('clients/')->with('message','Client ajouter avec success');
     }

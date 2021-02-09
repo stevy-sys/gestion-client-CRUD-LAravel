@@ -29,5 +29,3 @@ Route::resource('clients', 'ClientsController');
 Route::get('contact', 'ContactControlleur@create')->name('contact.create');
 Route::post('contact', 'ContactControlleur@store')->name('contact.store');
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

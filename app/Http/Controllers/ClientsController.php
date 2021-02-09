@@ -11,7 +11,7 @@ class ClientsController extends Controller
 {
     public function __construct(Type $var = null)
     {
-       $this->middleware('auth')->except(['index']);
+       $this->middleware('auth');
     }
 
     public function index(Request $request)

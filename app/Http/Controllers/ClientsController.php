@@ -9,9 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ClientsController extends Controller
 {
-    public function __construct(Type $var = null)
+    public function __construct(Request $request)
     {
        $this->middleware('auth');
+       $this->middleware('securisation_id_show')->only(['show']);
     }
 
     public function index(Request $request)

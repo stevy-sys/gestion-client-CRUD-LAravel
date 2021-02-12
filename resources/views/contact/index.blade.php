@@ -5,6 +5,7 @@
 <form action="{{ route('contact.store') }}" method="post">
     @csrf
     <div class="form-group">
+        <label for="name">Pseudo :</label>
         <input type="text" class="form-control @error("name") is-invalid @enderror" name="name" placeholder="entrez votre pseudo">
         @error('name')
             <div class="invalid-feedback">
@@ -13,7 +14,13 @@
         @enderror
     </div>
     <div class="form-group">
-        <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="entrer votre email">
+        <label for="email">Email : </label>
+        @guest
+            <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="entrer votre email">
+        @endguest
+        @auth
+            <input type="text" value="{{Auth::user()->email}}" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="entrer votre email">
+        @endauth
         @error('email')
             <div class="invalid-feedback">
                 {{ $errors->first("email") }}
@@ -21,6 +28,7 @@
         @enderror
     </div>
     <div class="form-group">
+        <label for="message">Message :</label>
         <textarea type="text" value="" cols="30" rows="10" class="form-control @error('email') is-invalid @enderror" placeholder="entrer votre message" name="message" ></textarea>
         @error('message')
             <div class="invalid-feedback">

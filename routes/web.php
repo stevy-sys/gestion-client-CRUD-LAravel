@@ -29,3 +29,9 @@ Route::resource('clients', 'ClientsController');
 Route::get('contact', 'ContactControlleur@create')->name('contact.create');
 Route::post('contact', 'ContactControlleur@store')->name('contact.store');
 Auth::routes();
+
+Route::namespace('Admin')->group(function(){
+    Route::get('/admin/login', 'Auth\LoginController@showLoginForm')->name('admin.login');
+    Route::post('/admin/login', 'Auth\LoginController@login');
+    Route::get('/admin/home', 'AdminController@index')->name('admin.home');
+});
